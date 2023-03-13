@@ -8,3 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: ServiceProviderManagerConsumer
 Import-Package: org.osgi.framework;version="1.3.0"
 Bundle-ActivationPolicy: lazy
+Require-Bundle: PhoneNetworkProvider;bundle-version="1.0.0"
