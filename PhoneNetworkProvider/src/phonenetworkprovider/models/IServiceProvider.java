@@ -2,21 +2,23 @@ package phonenetworkprovider.models;
 
 public interface IServiceProvider extends IModel {
 	
-	IUser getUser();
+	String getId();
 	
-	void setUser(IUser userId);
+	void setId(String Id);
 	
-	void setServiceProviderID(String providerId);
+	String getName();
 	
-	String getServiceProviderName();
+	void setName(String name);
 	
-	void setServiceProviderName(String serviceProviderName);
+	String getDigits();
 	
-	String getServiceProviderLocation();
+	void setDigits(String digits);
 	
-	void setServiceProviderLocation(String serviceProviderLocation);
+	String getLocation();
 	
-	String getServiceProviderNumber();
+	void setLocation(String location);
 	
-	void setServiceProviderNumber(String serviceProviderNumber);
+	String getNumber();
+	
+	void setNumber(String number);
 }

@@ -5,101 +5,84 @@ import phonenetworkprovider.stores.Database;
 
 public class ServiceProvider implements IServiceProvider {
 	
-	private IUser userId;
-	private String serviceProviderId;
-	private String serviceProviderName;
-	private String serviceProviderLocation;
-	private String serviceProviderNumber;
+	private String Id;
+	private String name;
+	private String digits;
+	private String location;
+	private String number;
 	
 
-	public ServiceProvider(IUser userId, String serviceProviderId, String serviceProviderName,
-			String serviceProviderLocation, String serviceProviderNumber) {
+	public ServiceProvider(String Id, String name, String digits,
+			String location, String number) {
 		super();
-		this.userId = userId;
-		this.serviceProviderId = serviceProviderId;
-		this.serviceProviderName = serviceProviderName;
-		this.serviceProviderLocation = serviceProviderLocation;
-		this.serviceProviderNumber = serviceProviderNumber;
-	}
-	
-	public ServiceProvider(String serviceProviderId, String serviceProviderName,
-			String serviceProviderLocation, String serviceProviderNumber) {
-		this.serviceProviderId = serviceProviderId;
-		this.serviceProviderName = serviceProviderName;
-		this.serviceProviderLocation = serviceProviderLocation;
-		this.serviceProviderNumber = serviceProviderNumber;
+		this.Id = Id;
+		this.name = name;
+		this.digits = digits;
+		this.location = location;
+		this.number = number;
 	}
 	
 	
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
-		return serviceProviderId;
+		return Id;
 	}
 
 	@Override
-	public void setServiceProviderID(String serviceProviderId) {
+	public void setId(String Id) {
 		// TODO Auto-generated method stub
-		this.serviceProviderId = serviceProviderId;
+		this.Id = Id;
 	}
 
 	@Override
-	public String getServiceProviderName() {
+	public String getName() {
 		// TODO Auto-generated method stub
-		return serviceProviderName;
+		return name;
 	}
 
 	@Override
-	public void setServiceProviderName(String serviceProviderName) {
+	public void setName(String name) {
 		// TODO Auto-generated method stub
-		this.serviceProviderName = serviceProviderName;
+		this.name = name;
 	}
 
 	@Override
-	public String getServiceProviderLocation() {
+	public String getLocation() {
 		// TODO Auto-generated method stub
-		return serviceProviderLocation;
+		return location;
 	}
 
 	@Override
-	public void setServiceProviderLocation(String serviceProviderLocation) {
+	public void setLocation(String location) {
 		// TODO Auto-generated method stub
-		this.serviceProviderLocation = serviceProviderLocation;
+		this.location = location;
 	}
 
 	@Override
-	public String getServiceProviderNumber() {
+	public String getNumber() {
 		// TODO Auto-generated method stub
-		return serviceProviderNumber;
+		return number;
 	}
 
 	@Override
-	public void setServiceProviderNumber(String serviceProviderNumber) {
+	public void setNumber(String number) {
 		// TODO Auto-generated method stub
-		this.serviceProviderNumber = serviceProviderNumber;
+		this.number = number;
 	}
 
 	@Override
-	public IUser getUser() {
+	public String getDigits() {
 		// TODO Auto-generated method stub
-		return userId;
-//        return Database.getUsers().stream()
-//                .filter(user -> user.getId() == this.userId)
-//                .findFirst()
-//                .orElseThrow(IllegalStateException::new);
+		return digits;
 	}
 
-	public void setUser(IUser userId) {
+	@Override
+	public void setDigits(String digits) {
 		// TODO Auto-generated method stub
-		this.userId = userId;
-//        boolean isValid = Database.getUsers().stream()
-//                .anyMatch(user -> user.getId() == userId);
-//        if (!isValid)
-//            throw new IllegalStateException("User id is invalid");
-//        else {
-//            this.userId = userId;
-//        }
+		this.digits = digits;
 	}
+
 
 	
 }

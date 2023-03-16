@@ -15,7 +15,7 @@ public class Database {
 	private static ArrayList<IUser> users;
     private static ArrayList<IMessage> messages;
     private static ArrayList<IDataPlan> dataPlans;
-    private static ArrayList<IServiceProvider> serviceProviders;
+    private static ArrayList<IServiceProvider> sProviders;
     
     private static Database INSTANCE;
     
@@ -33,7 +33,7 @@ public class Database {
 	}
 
 	public static ArrayList<IServiceProvider> getServiceProviders() {
-		return serviceProviders;
+		return sProviders;
 	}
 
 	public void addUser(IUser user) {
@@ -44,7 +44,7 @@ public class Database {
 		this.users = new ArrayList<>();
 		this.messages = new ArrayList<>();
 		this.dataPlans = new ArrayList<>();
-		this.serviceProviders = new ArrayList<>();		
+		this.sProviders = new ArrayList<>();		
 		
 	}
 	
@@ -159,42 +159,43 @@ public class Database {
     //Service Provider methods
     
 	//01.Delete Service Provider
-	public boolean removeServiceProvider(String serviceProviderId) {
-		return serviceProviders.removeIf(serviceProvider -> serviceProvider.getId() == serviceProviderId);
+	public boolean removeSProvider(String providerId) {
+		return sProviders.removeIf(sProvider -> sProvider.getId() == providerId);
 	}
 	
 	//02.Create Service Provider
-	public void createServiceProvider(IServiceProvider sProvider) {
-		if (serviceProviders.stream().anyMatch(serviceProvider -> serviceProvider.getId() == sProvider.getId() || serviceProvider.getServiceProviderName().equals(sProvider.getServiceProviderName()))) {
+	public void createSProvider(IServiceProvider serProvider) {
+		if (sProviders.stream().anyMatch(sProvider -> sProvider.getId() == sProvider.getId() || sProvider.getName().equals(sProvider.getName()))) {
             throw new IllegalArgumentException("Service Provider with that ID or name already exists.");
         }
-		serviceProviders.add(sProvider);
+		sProviders.add(serProvider);
 		
 	}
 
 	//03.Get all Service Providers
-	public IServiceProvider getServiceProvider(String serviceProviderName) {
-		return serviceProviders.stream().filter(serviceProvider -> serviceProvider.getServiceProviderName() == serviceProviderName).findFirst().orElse(null);
+	public IServiceProvider getSProvider(String providerName) {
+		return sProviders.stream().filter(sProvider -> sProvider.getName() == providerName).findFirst().orElse(null);
 	}
 
 	//04.Update Service Provider
-	public void updateServiceProvider(IServiceProvider sProvider) {
-		if (serviceProviders.stream().anyMatch(serviceProvider -> serviceProvider.getServiceProviderName().equals(sProvider.getServiceProviderName()) && serviceProvider.getId() != sProvider.getId())) {
+	public void updateSProvider(IServiceProvider serProvider) {
+		if (sProviders.stream().anyMatch(sProvider -> sProvider.getName().equals(sProvider.getName()) && sProvider.getId() != sProvider.getId())) {
             throw new IllegalArgumentException("Service Provider with that name already exists.");
         }
 		
-		IServiceProvider existingProvider = serviceProviders.stream().filter(serviceProvider -> serviceProvider.getId() == sProvider.getId()).findFirst().orElse(null);
+		IServiceProvider existingProvider = sProviders.stream().filter(sProvider -> sProvider.getId() == sProvider.getId()).findFirst().orElse(null);
         if (existingProvider != null) {
-        	existingProvider.setServiceProviderName(sProvider.getServiceProviderName());
-        	existingProvider.setServiceProviderLocation(sProvider.getServiceProviderLocation());
-        	existingProvider.setServiceProviderNumber(sProvider.getServiceProviderNumber());
+        	existingProvider.setName(serProvider.getName());
+        	existingProvider.setLocation(serProvider.getLocation());
+        	existingProvider.setNumber(serProvider.getNumber());
+        	existingProvider.setDigits(serProvider.getDigits());
         }
 	}
 	
 	//05.Search Service Provider
 	public List<IServiceProvider> searchProvider(String searchItem) {
-		return serviceProviders.stream()
-                .filter(serviceProvider -> serviceProvider.getServiceProviderName().toLowerCase().contains(searchItem.toLowerCase()) || serviceProvider.getId().toLowerCase().contains(searchItem.toLowerCase()))
+		return sProviders.stream()
+                .filter(sProvider -> sProvider.getName().toLowerCase().contains(searchItem.toLowerCase()) || sProvider.getId().toLowerCase().contains(searchItem.toLowerCase()))
                 .collect(Collectors.toList());
     }
 

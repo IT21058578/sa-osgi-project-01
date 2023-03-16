@@ -81,14 +81,16 @@ public class Activator implements BundleActivator {
 			String ID = reader.readLine();
 			System.out.println("Enter Service Provider Name:");
 			String name = reader.readLine();
+			System.out.println("Enter 3 digits for the Service Provider:");
+			String digits = reader.readLine();
 			System.out.println("Enter Service Provider Location:");
 			String location = reader.readLine();
 			System.out.println("Enter Service Provider Number:");
 			String number = reader.readLine();
 			
 			
-			ServiceProvider provider = new ServiceProvider(ID,name,location,number);
-			db.createServiceProvider(provider);
+			ServiceProvider provider = new ServiceProvider(ID,name,digits,location,number);
+			db.createSProvider(provider);
 			System.out.print("New service provider added successfully");
 				
 		}
@@ -96,7 +98,7 @@ public class Activator implements BundleActivator {
 			
 			System.out.println("===== Get all service providers in the system =====");
 			System.out.println("---------------------------------------------------------");
-			System.out.println("|| ProviderID ||\tProviderName ||\tLocation ||\tContact ||");
+			System.out.println("|| ProviderID ||\tProviderName ||\tFirst digits ||\tLocation ||\tContact ||");
 			       
             db.getInstance().getServiceProviders().stream().forEach((item) -> {
             
@@ -112,7 +114,7 @@ public class Activator implements BundleActivator {
 //            System.out.print("-------------------------------");
             
             System.out.println("---------------------------------------------------------");
-            System.out.println(item.getId()+"\t"+item.getServiceProviderName()+"\t"+item.getServiceProviderLocation()+"\t"+item.getServiceProviderNumber());
+            System.out.println(item.getId()+"\t"+item.getName()+"\t"+item.getDigits()+"\t"+item.getLocation()+"\t"+item.getNumber());
    
             } );
 			
@@ -129,13 +131,15 @@ public class Activator implements BundleActivator {
 			if(Instance != false) {
 				System.out.println("Enter service provider Name:");
 				String name = reader.readLine();
+				System.out.println("Enter first 3 digits for the service provider:");
+				String digits = reader.readLine();
 				System.out.println("Enter service provider Location:");
 				String loaction = reader.readLine();
 				System.out.println("Enter service provider Number:");
 				String number = reader.readLine();
 				
-				ServiceProvider provider = new ServiceProvider(ID,name,loaction,number);
-				db.updateServiceProvider(provider);
+				ServiceProvider provider = new ServiceProvider(ID,name,digits,loaction,number);
+				db.updateSProvider(provider);
 				System.out.print("Service provider updated successfully");
 			}
 			else {
@@ -154,7 +158,7 @@ public class Activator implements BundleActivator {
 			
 			if(Instance != false) {
 				
-				db.removeServiceProvider(ID);
+				db.removeSProvider(ID);
 				System.out.print("Service provider Deleted successfully");
 			}
 			else {
@@ -176,9 +180,9 @@ public class Activator implements BundleActivator {
 				
 				System.out.println("Search results:");
 				
-                System.out.format("%-10s | %-10s | %-20s | %-10s | %n", "ProviderID", "ProviderName", "Location" , "Contact");
+                System.out.format("%-10s | %-10s | %-10s | %-20s | %-10s | %n", "ProviderID", "ProviderName","FirstDigits", "Location" , "Contact");
                 for (IServiceProvider result : searchResults) {
-                    System.out.format("%-10s | %-20s | %-40s%n", result.getId(), result.getServiceProviderName(), result.getServiceProviderLocation() , result.getServiceProviderNumber());
+                    System.out.format("%-10s |%-10s | %-20s | %-40s%n", result.getId(), result.getName(),result.getDigits(), result.getLocation() , result.getNumber());
                 }
 			}
 			else {
