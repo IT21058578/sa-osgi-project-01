@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import phonenetworkprovider.models.IDataPlan;
 import phonenetworkprovider.models.IMessage;
@@ -12,6 +15,10 @@ import phonenetworkprovider.models.IServiceProvider;
 import phonenetworkprovider.models.IUser;
 
 public class Database {  
+	
+    private static final Random random = new Random();
+    private static final Set<String> usedPhoneNumbers = new HashSet<>();
+    
 	private static ArrayList<IUser> users;
     private static ArrayList<IMessage> messages;
     private static ArrayList<IDataPlan> dataPlans;
@@ -82,6 +89,27 @@ public class Database {
 
         return generatedString;
 	}
+	
+	//phone number generation 
+	//it's not fully implemented to get the digits from the consumer provider yet
+	
+    public static String generateUniquePhoneNumber(String digits) {
+        String phoneNumber = "";
+        do {
+            phoneNumber = generatePhoneNumber(digits);
+        } while (usedPhoneNumbers.contains(phoneNumber));
+        usedPhoneNumbers.add(phoneNumber);
+        return phoneNumber;
+    }
+	
+    private static String generatePhoneNumber(String digits) {
+        StringBuilder phoneNumber = new StringBuilder();
+        phoneNumber.append(digits); // Start with the specified 3 digits
+        for (int i = 0; i < 8; i++) {
+            phoneNumber.append(random.nextInt(10)); // Append random digit (0-9)
+        }
+        return phoneNumber.toString();
+    }
 	
 	
 	//DataPlan Producer Methords
