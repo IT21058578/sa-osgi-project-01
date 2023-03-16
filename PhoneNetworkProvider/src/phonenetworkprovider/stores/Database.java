@@ -155,5 +155,47 @@ public class Database {
                 .collect(Collectors.toList());
     }
     
+	
+    //Service Provider methods
+    
+	//01.Delete Service Provider
+	public boolean removeServiceProvider(String serviceProviderId) {
+		return serviceProviders.removeIf(serviceProvider -> serviceProvider.getId() == serviceProviderId);
+	}
+	
+	//02.Create Service Provider
+	public void createServiceProvider(IServiceProvider sProvider) {
+		if (serviceProviders.stream().anyMatch(serviceProvider -> serviceProvider.getId() == sProvider.getId() || serviceProvider.getServiceProviderName().equals(sProvider.getServiceProviderName()))) {
+            throw new IllegalArgumentException("Service Provider with that ID or name already exists.");
+        }
+		serviceProviders.add(sProvider);
+		
+	}
+
+	//03.Get all Service Providers
+	public IServiceProvider getServiceProvider(String serviceProviderName) {
+		return serviceProviders.stream().filter(serviceProvider -> serviceProvider.getServiceProviderName() == serviceProviderName).findFirst().orElse(null);
+	}
+
+	//04.Update Service Provider
+	public void updateServiceProvider(IServiceProvider sProvider) {
+		if (serviceProviders.stream().anyMatch(serviceProvider -> serviceProvider.getServiceProviderName().equals(sProvider.getServiceProviderName()) && serviceProvider.getId() != sProvider.getId())) {
+            throw new IllegalArgumentException("Service Provider with that name already exists.");
+        }
+		
+		IServiceProvider existingProvider = serviceProviders.stream().filter(serviceProvider -> serviceProvider.getId() == sProvider.getId()).findFirst().orElse(null);
+        if (existingProvider != null) {
+        	existingProvider.setServiceProviderName(sProvider.getServiceProviderName());
+        	existingProvider.setServiceProviderLocation(sProvider.getServiceProviderLocation());
+        	existingProvider.setServiceProviderNumber(sProvider.getServiceProviderNumber());
+        }
+	}
+	
+	//05.Search Service Provider
+	public List<IServiceProvider> searchProvider(String searchItem) {
+		return serviceProviders.stream()
+                .filter(serviceProvider -> serviceProvider.getServiceProviderName().toLowerCase().contains(searchItem.toLowerCase()) || serviceProvider.getId().toLowerCase().contains(searchItem.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 
 }
