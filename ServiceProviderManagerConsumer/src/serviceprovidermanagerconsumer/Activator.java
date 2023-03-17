@@ -25,8 +25,11 @@ public class Activator implements BundleActivator {
         boolean running = true;
         
         int decision;
+<<<<<<< HEAD
         
 //        db.getInstance().getUsers().stream().forEach((item) -> {System.out.println(item.getName());} );
+=======
+>>>>>>> 52868986caf5020e9c8129f701fae3c818899a82
        
         System.out.println("=========== Welcome to the Service Provider Portal =============");
  		System.out.println("Please navigate the menu using the number of the decision");

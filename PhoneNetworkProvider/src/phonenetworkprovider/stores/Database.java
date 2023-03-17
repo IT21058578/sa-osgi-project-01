@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import phonenetworkprovider.models.IDataPlan;
 import phonenetworkprovider.models.IMessage;
@@ -12,6 +15,10 @@ import phonenetworkprovider.models.IServiceProvider;
 import phonenetworkprovider.models.IUser;
 
 public class Database {  
+	
+    private static final Random random = new Random();
+    private static final Set<String> usedPhoneNumbers = new HashSet<>();
+    
 	private static ArrayList<IUser> users;
     private static ArrayList<IMessage> messages;
     private static ArrayList<IDataPlan> dataPlans;
@@ -82,6 +89,27 @@ public class Database {
 
         return generatedString;
 	}
+	
+	//phone number generation 
+	//it's not fully implemented to get the digits from the consumer provider yet
+	
+    public static String generateUniquePhoneNumber(String digits) {
+        String phoneNumber = "";
+        do {
+            phoneNumber = generatePhoneNumber(digits);
+        } while (usedPhoneNumbers.contains(phoneNumber));
+        usedPhoneNumbers.add(phoneNumber);
+        return phoneNumber;
+    }
+	
+    private static String generatePhoneNumber(String digits) {
+        StringBuilder phoneNumber = new StringBuilder();
+        phoneNumber.append(digits); // Start with the specified 3 digits
+        for (int i = 0; i < 8; i++) {
+            phoneNumber.append(random.nextInt(10)); // Append random digit (0-9)
+        }
+        return phoneNumber.toString();
+    }
 	
 	
 	//DataPlan Producer Methords
@@ -231,4 +259,75 @@ public class Database {
                 .collect(Collectors.toList());
     }
 
+	
+	// Customer Care Center
+	
+	
+		//01.Delete Message
+		public List<IMessage> deleteMessage(String messageID) {
+		    List<IMessage> removeMessage = new ArrayList<>();
+		    messages.removeIf(msg -> {
+		        if (msg.getId().equals(messageID)) {
+		        	removeMessage.add(msg);
+		            return true;
+		        }
+		        return false;
+		    });
+		    return removeMessage;
+		}
+		
+		//02.Delete Complaint
+		public List<IMessage> deleteComplaint(String compID) {
+		    List<IMessage> removeComplaint = new ArrayList<>();
+		    messages.removeIf(msg -> {
+		        if (msg.getId().equals(compID)) {
+		        	removeComplaint.add(msg);
+		            return true;
+		        }
+		        return false;
+		    });
+		    return removeComplaint;
+		}
+			
+			
+		//03.Create Message
+			public void createMessage(IMessage message) {
+				if (messages.stream().anyMatch(messagedes -> messagedes.getId() == message.getId() || messagedes.getMessageDescription().equals(message.getMessageDescription()))) {
+		            throw new IllegalArgumentException("Feedback is already given by the User");
+		        }
+				messages.add(message);
+				
+			}
+		
+		//04.Create Complaint
+			public void createComplaint(IMessage complaint) {
+				if (messages.stream().anyMatch(messagedes -> messagedes.getId() == complaint.getId() || messagedes.getComplaintDescription().equals(complaint.getComplaintDescription()))) {
+				            throw new IllegalArgumentException("Complaint is already given by the User");
+				        }
+						messages.add(complaint);
+						
+					}	
+		//05.Get all Messages
+			public IMessage getMessages(String msg) {
+				return messages.stream().filter(message -> message.getMessageDescription() == msg).findFirst().orElse(null);
+			}
+			
+		//06.Get all Messages
+					public IMessage getComplaint(String comp) {
+						return messages.stream().filter(complaint -> complaint.getComplaintDescription() == comp).findFirst().orElse(null);
+					}
+
+		//07.Search Feedbacks
+			public List<IMessage> searchMessages(String searchTerm) {
+				return messages.stream()
+		                .filter(msg -> msg.getMessageDescription().toLowerCase().contains(searchTerm.toLowerCase()) || msg.getId().toLowerCase().contains(searchTerm.toLowerCase()))
+		                .collect(Collectors.toList());
+		    }
+			
+		//08.Search DataPlan
+					public List<IMessage> searchComlpaint(String searchTerm) {
+						return messages.stream()
+				                .filter(msg -> msg.getComplaintDescription().toLowerCase().contains(searchTerm.toLowerCase()) || msg.getId().toLowerCase().contains(searchTerm.toLowerCase()))
+				                .collect(Collectors.toList());
+				    }
 }
