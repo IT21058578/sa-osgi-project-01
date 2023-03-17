@@ -227,4 +227,75 @@ public class Database {
                 .collect(Collectors.toList());
     }
 
+	
+	// Customer Care Center
+	
+	
+		//01.Delete Message
+		public List<IMessage> deleteMessage(String messageID) {
+		    List<IMessage> removeMessage = new ArrayList<>();
+		    messages.removeIf(msg -> {
+		        if (msg.getId().equals(messageID)) {
+		        	removeMessage.add(msg);
+		            return true;
+		        }
+		        return false;
+		    });
+		    return removeMessage;
+		}
+		
+		//02.Delete Complaint
+		public List<IMessage> deleteComplaint(String compID) {
+		    List<IMessage> removeComplaint = new ArrayList<>();
+		    messages.removeIf(msg -> {
+		        if (msg.getId().equals(compID)) {
+		        	removeComplaint.add(msg);
+		            return true;
+		        }
+		        return false;
+		    });
+		    return removeComplaint;
+		}
+			
+			
+		//03.Create Message
+			public void createMessage(IMessage message) {
+				if (messages.stream().anyMatch(messagedes -> messagedes.getId() == message.getId() || messagedes.getMessageDescription().equals(message.getMessageDescription()))) {
+		            throw new IllegalArgumentException("Feedback is already given by the User");
+		        }
+				messages.add(message);
+				
+			}
+		
+		//04.Create Complaint
+			public void createComplaint(IMessage complaint) {
+				if (messages.stream().anyMatch(messagedes -> messagedes.getId() == complaint.getId() || messagedes.getComplaintDescription().equals(complaint.getComplaintDescription()))) {
+				            throw new IllegalArgumentException("Complaint is already given by the User");
+				        }
+						messages.add(complaint);
+						
+					}	
+		//05.Get all Messages
+			public IMessage getMessages(String msg) {
+				return messages.stream().filter(message -> message.getMessageDescription() == msg).findFirst().orElse(null);
+			}
+			
+		//06.Get all Messages
+					public IMessage getComplaint(String comp) {
+						return messages.stream().filter(complaint -> complaint.getComplaintDescription() == comp).findFirst().orElse(null);
+					}
+
+		//07.Search Feedbacks
+			public List<IMessage> searchMessages(String searchTerm) {
+				return messages.stream()
+		                .filter(msg -> msg.getMessageDescription().toLowerCase().contains(searchTerm.toLowerCase()) || msg.getId().toLowerCase().contains(searchTerm.toLowerCase()))
+		                .collect(Collectors.toList());
+		    }
+			
+		//08.Search DataPlan
+					public List<IMessage> searchComlpaint(String searchTerm) {
+						return messages.stream()
+				                .filter(msg -> msg.getComplaintDescription().toLowerCase().contains(searchTerm.toLowerCase()) || msg.getId().toLowerCase().contains(searchTerm.toLowerCase()))
+				                .collect(Collectors.toList());
+				    }
 }
