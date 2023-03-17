@@ -87,14 +87,19 @@ public class Database {
 	//DataPlan Producer Methords
 	
 	//01.Delete DataPlan
-	public boolean deletePackage(String dataPackageID) {
-		return dataPlans.removeIf(item -> item.getId() == dataPackageID);
-		
-//		IDataPlan packageToDelete = dataPlans.stream().filter(dataPackage -> dataPackage.getId() == dataPackageID).findFirst().orElse(null);
-//	    if (packageToDelete != null) {
-//	    	dataPlans.remove(packageToDelete);
-//	    }
+	
+	public List<IDataPlan> deleteDataPackage(String dataPackageID) {
+	    List<IDataPlan> removedDataPackages = new ArrayList<>();
+	    dataPlans.removeIf(item -> {
+	        if (item.getId().equals(dataPackageID)) {
+	            removedDataPackages.add(item);
+	            return true;
+	        }
+	        return false;
+	    });
+	    return removedDataPackages;
 	}
+
 	
 	
 	//02.Create DataPlan
@@ -125,24 +130,51 @@ public class Database {
 //        }
 //	}
 	
-	public void updateDataPackage(IDataPlan dataplan) {
-	    if (dataPlans.stream().anyMatch(dataPackage -> dataPackage.getDataPackageName().equals(dataplan.getDataPackageName()) && dataPackage.getId() != dataplan.getId())) {
+//	public void updateDataPackage(IDataPlan dataplan) {
+//	    if (dataPlans.stream().anyMatch(dataPackage -> dataPackage.getDataPackageName().equals(dataplan.getDataPackageName()) && dataPackage.getId() != dataplan.getId())) {
+//	        throw new IllegalArgumentException("Data package with that name already exists.");
+//	    }
+//
+//	    IDataPlan existingPackage = (IDataPlan) search(dataplan.getId());
+//	    if (existingPackage != null) {
+//	    	existingPackage.setDataPackageName(dataplan.getId());
+//	        existingPackage.setDataPackageName(dataplan.getDataPackageName());
+//	        existingPackage.setDataPackageDescription(dataplan.getDataPackageDescription());
+//	        existingPackage.setDataPackagePrice(dataplan.getDataPackagePrice());
+//	        System.out.println("+----+---------------------+----------------------+----------------+");
+//	        System.out.println("| ID | Data Package Name   | Data Package Descr.  | Price (LkR)    |");
+//	        System.out.println("+----+---------------------+----------------------+----------------+");
+//	        System.out.printf("| %-2s | %-19s | %-20s | %-11.2s |\n", existingPackage.getId(), existingPackage.getDataPackageName(), existingPackage.getDataPackageDescription(), existingPackage.getDataPackagePrice());
+//	        System.out.println("+----+---------------------+----------------------+----------------+");
+//	    } else {
+//	        System.err.println("Could not find data package with ID " + dataplan.getId());
+//	    }
+//	}
+	
+	public List<IDataPlan> updateDataPackage(IDataPlan updatedPackage) {
+	    if (dataPlans.stream().anyMatch(dataPackage -> dataPackage.getDataPackageName().equals(updatedPackage.getDataPackageName()) && dataPackage.getId() != updatedPackage.getId())) {
 	        throw new IllegalArgumentException("Data package with that name already exists.");
 	    }
 
-	    IDataPlan existingPackage = getDataPackage(dataplan.getId());
-	    if (existingPackage != null) {
-	    	existingPackage.setDataPackageName(dataplan.getId());
-	        existingPackage.setDataPackageName(dataplan.getDataPackageName());
-	        existingPackage.setDataPackageDescription(dataplan.getDataPackageDescription());
-	        existingPackage.setDataPackagePrice(dataplan.getDataPackagePrice());
-	        System.out.println("+----+---------------------+----------------------+----------------+");
-	        System.out.println("| ID | Data Package Name   | Data Package Descr.  | Price (LkR) |");
-	        System.out.println("+----+---------------------+----------------------+----------------+");
-	        System.out.printf("| %-2d | %-19s | %-20s | %-11.2f |\n", existingPackage.getId(), existingPackage.getDataPackageName(), existingPackage.getDataPackageDescription(), existingPackage.getDataPackagePrice());
-	        System.out.println("+----+---------------------+----------------------+----------------+");
+	    Optional<IDataPlan> matchingPackage = dataPlans.stream().filter(dataPackage -> dataPackage.getId() == updatedPackage.getId()).findFirst();
+	    if (matchingPackage.isPresent()) {
+	        IDataPlan packageToUpdate = matchingPackage.get();
+//	        packageToUpdate.setDataPackageName(updatedPackage.getProvider());
+//	        packageToUpdate.setDataPackageName(updatedPackage.getId());
+	        packageToUpdate.setDataPackageName(updatedPackage.getDataPackageName());
+	        packageToUpdate.setDataPackageDescription(updatedPackage.getDataPackageDescription());
+	        packageToUpdate.setDataPackagePrice(updatedPackage.getDataPackagePrice());
+
+	        System.out.println("+-----+-----+---------------------+----------------------+----------------+");
+	        System.out.println("| SID | PID | Data Package Name   | Data Package Descr.  | Price (LkR) |");
+	        System.out.println("+-----+-----+---------------------+----------------------+----------------+"); 
+	        System.out.printf("| %-2s | %-2s | %-19s | %-20s | %-11.2s |\\n",packageToUpdate.getProvider(), packageToUpdate.getId(), packageToUpdate.getDataPackageName(), packageToUpdate.getDataPackageDescription(), packageToUpdate.getDataPackagePrice());
+	        System.out.println("+-----+-----+---------------------+----------------------+----------------+"); 
+
+	        return dataPlans;
 	    } else {
-	        System.err.println("Could not find data package with ID " + dataplan.getId());
+	        System.err.println("Could not find data package with ID " + updatedPackage.getId());
+	        return new ArrayList<IDataPlan>();
 	    }
 	}
 

@@ -1,11 +1,14 @@
 package phonenetworkprovider.models;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
 import phonenetworkprovider.stores.Database;
 
 public class DataPlan implements IDataPlan{
 	
-//	private String id;
-//	private String serviceProviderId;
+	private String id;
+	private String serviceProviderId;
 	private String dataPackageID;
 	private String dataPackageName;
 	private String dataPackageDescription;
@@ -15,16 +18,16 @@ public class DataPlan implements IDataPlan{
 	public DataPlan(String id, String serviceProviderId, String dataPackageID, String dataPackageName,
 			String dataPackageDescription, double dataPackagePrice) {
 		super();
-//		this.id = id;
-//		this.serviceProviderId = serviceProviderId;
+		this.id = id;
+		this.serviceProviderId = serviceProviderId;
 		this.dataPackageID = dataPackageID;
 		this.dataPackageName = dataPackageName;
 		this.dataPackageDescription = dataPackageDescription;
 		this.dataPackagePrice = dataPackagePrice;
 	}
 
-	public DataPlan(String dataPackageID, String dataPackageName, String dataPackageDescription ,double dataPackagePrice) {
-//		this.serviceProviderId = serviceProviderId;
+	public DataPlan(String serviceProviderId,String dataPackageID, String dataPackageName, String dataPackageDescription ,double dataPackagePrice) {
+		this.serviceProviderId = serviceProviderId;
 		this.dataPackageID = dataPackageID;
 		this.dataPackageName = dataPackageName;
 		this.dataPackageDescription = dataPackageDescription;
@@ -100,27 +103,27 @@ public class DataPlan implements IDataPlan{
 	}
 
 
-//	@Override
-//    public IServiceProvider getProvider() {
-//        return Database.getServiceProviders().stream()
-//                .filter(provider -> provider.getId() == this.serviceProviderId)
-//                .findFirst()
-//                .orElseThrow(IllegalStateException::new);
-//    }
-//	
-//	@Override
-//    public void setProvider(String providerId) {
-//        // Check if id is valid.
-//        boolean isValid = Database.getServiceProviders().stream()
-//                .anyMatch(provider -> provider.getId() == providerId);
-//        if (!isValid)
-//            throw new IllegalStateException("Provider id is invalid");
-//        else {
-//            this.serviceProviderId = providerId;
-//        }
-//    }
+	@Override
+    public IServiceProvider getProvider() {
+        return Database.getServiceProviders().stream()
+                .filter(provider -> provider.getId() == this.serviceProviderId)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
+	
+	@Override
+    public void setProvider(String providerId) {
+        // Check if id is valid.
+        boolean isValid = Database.getServiceProviders().stream()
+                .anyMatch(provider -> provider.getId() == providerId);
+        if (!isValid)
+            throw new IllegalStateException("Provider id is invalid");
+        else {
+            this.serviceProviderId = providerId;
+        }
+    }
 
-		
+	private ServiceReference reference;
 	
 
 }
