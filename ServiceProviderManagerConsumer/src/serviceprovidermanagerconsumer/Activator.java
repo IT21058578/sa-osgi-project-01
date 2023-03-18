@@ -15,13 +15,9 @@ import phonenetworkprovider.stores.Database;
 public class Activator implements BundleActivator {
 
 	private ServiceReference reference;
-	private static BundleContext context;
+	
 
-	static BundleContext getContext() {
-		return context;
-	}
-
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext context) throws Exception {
 		System.out.println("Starting Service Provider Consumer...");
 		reference = context.getServiceReference(Database.class.getName());
 		Database db = (Database) context.getService(reference);
@@ -193,7 +189,7 @@ public class Activator implements BundleActivator {
 		}
 	}
 
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext context) throws Exception {
 		System.out.println("Good Bye");
 		context.ungetService(reference);
 	}
