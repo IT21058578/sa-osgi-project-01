@@ -36,36 +36,20 @@ public class Activator implements BundleActivator {
 			 
 	       int decision;
 			
-			System.out.println(" 1 -> Add Feedback");
-			System.out.println(" 2 -> View All Feedbacks");
-			System.out.println(" 3 -> Remove Feedbacks");
-			System.out.println(" 4 -> Search Feedbacks");
-			System.out.println(" 5 -> Add A Complaint");
-			System.out.println(" 6 -> View All Complaints");
-			System.out.println(" 7 -> Remove Complaints");
-			System.out.println(" 8 -> Search Complaints");
+			System.out.println(" 1 -> View All Feedbacks");
+			System.out.println(" 2 -> Remove Feedbacks");
+			System.out.println(" 3 -> Search Feedbacks");
+			System.out.println(" 4 -> View All Complaints");
+			System.out.println(" 5 -> Remove Complaints");
+			System.out.println(" 6 -> Search Complaints");
+			System.out.println(" 7 -> Exit");
 			System.out.println("=========================================================");
 			System.out.print("Enter your response: ");
 			decision = Integer.parseInt(reader.readLine());
 	switch (decision) {
-		case 1:
-			
-			System.out.println("===== Add new Feedback =====");
-			System.out.println();
-//			System.out.println("To select the Service Provider refer menu and enter the number of the decision");
-			
-//			System.out.println("Enter feedback ID:");
-//			String id = reader.readLine();
-			System.out.println("Enter your Feedback:");
-			String des = reader.readLine();
-			
-			Message plan = new Message(db.generateUniqueId(),des);
-			db.createMessage(plan);
-			System.out.print("Your Feedback has been added successfully");
-			
-		 break;
+
 		 
-		case 2: 
+		case 1: 
 			
 			System.out.println("===== All Feedback =====");
 			System.out.println();
@@ -82,7 +66,7 @@ public class Activator implements BundleActivator {
 			
 			break;
 			
-		case 3:
+		case 2:
 			
 			System.out.println("===== Remove Feedback =====");
 			System.out.println();
@@ -102,7 +86,7 @@ public class Activator implements BundleActivator {
 			
 		break;
 	
-		case 4:
+		case 3:
 	
 	System.out.println("===== Search Feedback =====");
 	System.out.println();
@@ -127,24 +111,8 @@ public class Activator implements BundleActivator {
     }
 	
 	break;
-	
-		case 5:
-	
-	System.out.println("===== Add new Complaint =====");
-	System.out.println();
-	
-//	System.out.println("Enter complaint ID:");
-//	String id2 = reader.readLine();
-	System.out.println("Enter your Complaint:");
-	String compdes = reader.readLine();
-	
-	Message plan1 = new Message(db.generateUniqueId(),compdes);
-	db.createComplaint(plan1);
-	System.out.print("Your Feedback has been added successfully");
-	
-	break;
-	
-	case 6:
+		
+	case 4:
 	
 	System.out.println("===== All Complaint =====");
 	System.out.println();
@@ -160,7 +128,7 @@ public class Activator implements BundleActivator {
 	
 	break;
 	
-	case 7:
+	case 5:
 			
 			System.out.println("===== Remove Complaint =====");
 			System.out.println();
@@ -182,7 +150,7 @@ public class Activator implements BundleActivator {
 		break;
 		
 		
-	case 8:
+	case 6:
 			
 			System.out.println("===== Search Complaint =====");
 			System.out.println();
@@ -207,6 +175,10 @@ public class Activator implements BundleActivator {
 			
 			
 	break;
+	
+	case 7:
+		System.out.println("Exited from the Customer Care system");
+		return ;
 	
 	default:
 		

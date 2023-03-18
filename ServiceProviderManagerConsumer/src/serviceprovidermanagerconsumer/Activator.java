@@ -16,10 +16,7 @@ public class Activator implements BundleActivator {
 
 	private ServiceReference reference;
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> 1bea420afc09aabd7c4f3e6387b3683a1af3563e
 	public void start(BundleContext context) throws Exception {
 		System.out.println("Starting Service Provider Consumer...");
 		reference = context.getServiceReference(Database.class.getName());
@@ -28,13 +25,9 @@ public class Activator implements BundleActivator {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         boolean running = true;
         
-        int decision;
-<<<<<<< HEAD
-        
+        int decision;        
 //        db.getInstance().getUsers().stream().forEach((item) -> {System.out.println(item.getName());} );
-=======
->>>>>>> 52868986caf5020e9c8129f701fae3c818899a82
-       
+
         System.out.println("=========== Welcome to the Service Provider Portal =============");
  		System.out.println("Please navigate the menu using the number of the decision");
  		System.out.println("=========================================================");
