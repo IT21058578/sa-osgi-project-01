@@ -4,9 +4,9 @@ public interface IDataPlan extends IModel {
 
 //	int getDataPackageID();
 	
-//	IServiceProvider getProvider();
-//	
-//	void setProvider(String providerId);
+	IServiceProvider getProvider();
+	
+	void setProvider(String providerId);
 	
 	void setDataPackageID(String dataPackageID);
 	
