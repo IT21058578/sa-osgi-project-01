@@ -106,7 +106,7 @@ public class Activator implements BundleActivator {
 		        System.out.println("| SID | PID | Data Package Name   | Data Package Descr.  | Price (LkR) |");
 		        System.out.println("+-----+-----+---------------------+----------------------+----------------+");     
 	            db.getInstance().getDataPlans().stream().forEach((item) -> {         
-	            System.out.printf("| %-2s | %-2s | %-19s | %-20s | %-11.2s |\n",item.getProvider(),item.getId(),item.getDataPackageName(),item.getDataPackageName(),item.getDataPackagePrice());
+	            System.out.printf("| %-2s | %-2s | %-19s | %-20s | %-11.2s |\n",item.getProvider().toString(),item.getId(),item.getDataPackageName(),item.getDataPackageName(),item.getDataPackagePrice());
 	            System.out.println("+-----+-----+---------------------+----------------------+----------------+"); 
 	            } );	
 	            System.out.println();

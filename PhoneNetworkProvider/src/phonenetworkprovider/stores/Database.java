@@ -329,5 +329,5 @@ public class Database {
 						return messages.stream()
 				                .filter(msg -> msg.getComplaintDescription().toLowerCase().contains(searchTerm.toLowerCase()) || msg.getId().toLowerCase().contains(searchTerm.toLowerCase()))
 				                .collect(Collectors.toList());
-				    }
+		    }
 }

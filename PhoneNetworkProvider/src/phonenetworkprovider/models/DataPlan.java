@@ -86,8 +86,7 @@ public class DataPlan implements IDataPlan{
 
 	@Override
 	public void setDataPackageDescription(String dataPackageDescription) {
-		this.dataPackageDescription = dataPackageDescription;
-		
+		this.dataPackageDescription = dataPackageDescription;	
 	}
 
 	@Override
@@ -122,8 +121,5 @@ public class DataPlan implements IDataPlan{
             this.serviceProviderId = providerId;
         }
     }
-
-	private ServiceReference reference;
 	
-
 }
