@@ -36,35 +36,20 @@ public class Activator implements BundleActivator {
 			 
 	       int decision;
 			
-			System.out.println(" 1 -> Add Feedback");
-			System.out.println(" 2 -> View All Feedbacks");
-			System.out.println(" 3 -> Remove Feedbacks");
-			System.out.println(" 4 -> Search Feedbacks");
-			System.out.println(" 5 -> Add A Complaint");
-			System.out.println(" 6 -> View All Complaints");
-			System.out.println(" 7 -> Remove Complaints");
-			System.out.println(" 8 -> Search Complaints");
-			
+			System.out.println(" 1 -> View All Feedbacks");
+			System.out.println(" 2 -> Remove Feedbacks");
+			System.out.println(" 3 -> Search Feedbacks");
+			System.out.println(" 4 -> View All Complaints");
+			System.out.println(" 5 -> Remove Complaints");
+			System.out.println(" 6 -> Search Complaints");
+			System.out.println(" 7 -> Exit");
+			System.out.println("=========================================================");
+			System.out.print("Enter your response: ");
 			decision = Integer.parseInt(reader.readLine());
 	switch (decision) {
-		case 1:
-			
-			System.out.println("===== Add new Feedback =====");
-			System.out.println();
-			System.out.println("To select the Service Provider refer menu and enter the number of the decision");
-			
-			System.out.println("Enter feedback ID:");
-			String id = reader.readLine();
-			System.out.println("Enter your Feedback:");
-			String des = reader.readLine();
-			
-			Message plan = new Message(id,des);
-			db.createMessage(plan);
-			System.out.print("Your Feedback has been added successfully");
-			
-		 break;
+
 		 
-		case 2: 
+		case 1: 
 			
 			System.out.println("===== All Feedback =====");
 			System.out.println();
@@ -75,17 +60,18 @@ public class Activator implements BundleActivator {
 				
 				System.out.println("----------------------------------------------------");
 	            System.out.println(msg.getId()+"\t"+msg.getMessageDescription());
+	            System.out.println("----------------------------------------------------");
 
 			});
 			
 			break;
 			
-		case 3:
+		case 2:
 			
 			System.out.println("===== Remove Feedback =====");
 			System.out.println();
 			System.out.println("To Delete message please enter the messageID: ");
-			String ID = reader.readLine().toLowerCase();
+			String ID = reader.readLine();
 			System.out.println();
 			
 			List<IMessage> msg = db.deleteMessage(ID);
@@ -100,12 +86,12 @@ public class Activator implements BundleActivator {
 			
 		break;
 	
-		case 4:
+		case 3:
 	
 	System.out.println("===== Search Feedback =====");
 	System.out.println();
 	
-	System.out.println("To Search data packages please enter the PackageID or PackageName ");
+	System.out.println("To Search complaints please enter the complaintID: ");
 	String id1 = reader.readLine();
 	
 	List<IMessage> searchResults = db.searchMessages(id1);
@@ -115,9 +101,9 @@ public class Activator implements BundleActivator {
 		
 		System.out.println("Search results:");
 		
-        System.out.format("%-10s | %-10s | %-20s | %-10s | %n", "MessageID", "Description");
+        System.out.format("%-10s | %-10s| %n", "MessageID", "Description");
         for (IMessage result : searchResults) {
-            System.out.format("%-10s | %-20s | %-40s%n", result.getId(), result.getComplaintDescription());
+            System.out.format("%-10s | %-10s| %n", result.getId(), result.getMessageDescription());
         }
 	}
 	else {
@@ -125,24 +111,8 @@ public class Activator implements BundleActivator {
     }
 	
 	break;
-	
-		case 5:
-	
-	System.out.println("===== Add new Complaint =====");
-	System.out.println();
-	
-	System.out.println("Enter complaint ID:");
-	String id2 = reader.readLine();
-	System.out.println("Enter your Complaint:");
-	String compdes = reader.readLine();
-	
-	Message plan1 = new Message(id2,compdes);
-	db.createComplaint(plan1);
-	System.out.print("Your Feedback has been added successfully");
-	
-	break;
-	
-	case 6:
+		
+	case 4:
 	
 	System.out.println("===== All Complaint =====");
 	System.out.println();
@@ -158,32 +128,33 @@ public class Activator implements BundleActivator {
 	
 	break;
 	
-	case 7:
+	case 5:
 			
 			System.out.println("===== Remove Complaint =====");
 			System.out.println();
 			
 			System.out.println("To Delete message please enter the complaintID ");
-			String id3 = reader.readLine();
-			boolean Instance = db.getInstance().getMessages().stream().anyMatch(msg2 -> msg2.getId() == id3);
+			String ID2 = reader.readLine();
+			boolean Instance = db.getInstance().getMessages().stream().anyMatch(msg2 -> msg2.getId() == ID2);
 			
-			if(Instance != false) {
-				
-				db.deleteComplaint(id3);
-				System.out.print("Data palan Deleted successfully");
+			List<IMessage> msg4 = db.deleteComplaint(ID2);
+			
+			if(msg4 != null) {
+				System.out.println("Message Deleted Successfully");
 			}
 			else {
-		        System.out.println("Data package not found.");
-		    }
+				System.out.println("Message Not Found");
+			}
+		
 			
 		break;
 		
 		
-	case 8:
+	case 6:
 			
 			System.out.println("===== Search Complaint =====");
 			System.out.println();
-			System.out.println("To Search data packages please enter the PackageID or PackageName ");
+			System.out.println("To Search complaints please enter the ComplainttID: ");
 			String id4 = reader.readLine();
 			
 			List<IMessage> searchResults1 = db.searchComlpaint(id4);
@@ -195,7 +166,7 @@ public class Activator implements BundleActivator {
 				
 		        System.out.format("%-10s | %-10s | %n", "ComplaintID", "Description" );
 		        for (IMessage result : searchResults1) {
-		            System.out.format("%-10s | %-20s | %-40s%n", result.getId(), result.getComplaintDescription());
+		            System.out.format("%-10s | %-20s | %n", result.getId(), result.getComplaintDescription());
 		        }
 			}
 			else {
@@ -205,19 +176,21 @@ public class Activator implements BundleActivator {
 			
 	break;
 	
+	case 7:
+		System.out.println("Exited from the Customer Care system");
+		return ;
+	
 	default:
 		
 		System.out.println("Error");
 		break;
-		
-		
 }
 		
 	}
 	}
 	
 	public void stop(BundleContext bundleContext) throws Exception {
-		System.out.println("==== Exitting From Customer Care Admin ====");
+		System.out.println("==== Exiting From Customer Care Admin ====");
 		bundleContext.ungetService(reference);
 	}
 }	
