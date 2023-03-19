@@ -1,112 +1,82 @@
 package phonenetworkprovider.models;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-
 import phonenetworkprovider.stores.Database;
 
 public class DataPlan implements IDataPlan{
 	
 	private String id;
 	private String serviceProviderId;
-	private String dataPackageID;
-	private String dataPackageName;
-	private String dataPackageDescription;
-	private double dataPackagePrice; 
+	private String name;
+	private String description;
+	private double price; 
 	
-
-	public DataPlan(String id, String serviceProviderId, String dataPackageID, String dataPackageName,
-			String dataPackageDescription, double dataPackagePrice) {
+	public DataPlan(String name, String description, double price) {
 		super();
-		this.id = id;
-		this.serviceProviderId = serviceProviderId;
-		this.dataPackageID = dataPackageID;
-		this.dataPackageName = dataPackageName;
-		this.dataPackageDescription = dataPackageDescription;
-		this.dataPackagePrice = dataPackagePrice;
-	}
-
-	public DataPlan(String serviceProviderId,String dataPackageID, String dataPackageName, String dataPackageDescription ,double dataPackagePrice) {
-		this.serviceProviderId = serviceProviderId;
-		this.dataPackageID = dataPackageID;
-		this.dataPackageName = dataPackageName;
-		this.dataPackageDescription = dataPackageDescription;
-		this.dataPackagePrice = dataPackagePrice;
+		this.name = name;
+		this.description = description;
+		this.price = price;
 	}
 	
-	public DataPlan(String dataPackageName, String dataPackageDescription ,double dataPackagePrice) {
-
-		this.dataPackageName = dataPackageName;
-		this.dataPackageDescription = dataPackageDescription;
-		this.dataPackagePrice = dataPackagePrice;
+	public DataPlan(String serviceProviderId, String name, String description, double price) {
+		this(name, description, price);
+		this.id = Database.getInstance().generateUniqueId();
+		this.serviceProviderId = serviceProviderId;
 	}
 	
-	public DataPlan(String dataPackageID) {
-		this.dataPackageID = dataPackageID;
+	@Override
+	public String getServiceProviderId() {
+		return serviceProviderId;
+	}
+
+	@Override
+	public void setServiceProviderId(String id) {
+		this.serviceProviderId = id;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public double getPrice() {
+		return price;
+	}
+
+	@Override
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	@Override
 	public String getId() {
-		
-		return dataPackageID;
+		return id;
 	}
-
-
-//	@Override
-//	public int getDataPackageID() {
-//		return dataPackageID;
-//	}
-
-
+	
 	@Override
-	public void setDataPackageID(String dataPackageID) {
-		this.dataPackageID = dataPackageID;
-		
+	public String getProviderId() {
+		return serviceProviderId;
 	}
-
-
-	@Override
-	public String getDataPackageName() {
-		return dataPackageName;
-	}
-
-
-	@Override
-	public void setDataPackageName(String dataPackageName) {
-		this.dataPackageName = dataPackageName;
-		
-	}
-
-
-	@Override
-	public String getDataPackageDescription() {
-		return dataPackageDescription;
-	}
-
-
-	@Override
-	public void setDataPackageDescription(String dataPackageDescription) {
-		this.dataPackageDescription = dataPackageDescription;
-		
-	}
-
-	@Override
-	public double getDataPackagePrice() {
-		return dataPackagePrice;
-	}
-
-
-	@Override
-	public void setDataPackagePrice(double dataPackagePrice) {
-		this.dataPackagePrice =  dataPackagePrice;
-		
-	}
-
 
 	@Override
     public IServiceProvider getProvider() {
-        return Database.getServiceProviders().stream()
-                .filter(provider -> provider.getId() == this.serviceProviderId)
+        return Database.getInstance().getServiceProviders().stream()
+                .filter(provider -> provider.getId().equals(this.serviceProviderId))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -114,7 +84,7 @@ public class DataPlan implements IDataPlan{
 	@Override
     public void setProvider(String providerId) {
         // Check if id is valid.
-        boolean isValid = Database.getServiceProviders().stream()
+        boolean isValid = Database.getInstance().getServiceProviders().stream()
                 .anyMatch(provider -> provider.getId() == providerId);
         if (!isValid)
             throw new IllegalStateException("Provider id is invalid");
@@ -122,8 +92,4 @@ public class DataPlan implements IDataPlan{
             this.serviceProviderId = providerId;
         }
     }
-
-	private ServiceReference reference;
-	
-
 }

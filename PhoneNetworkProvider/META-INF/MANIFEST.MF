@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: PhoneNetworkProvider
 Bundle-SymbolicName: PhoneNetworkProvider
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: PhoneNetworkProvider
 Bundle-Activator: phonenetworkprovider.Activator
-Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: phonenetworkprovider.models,
  phonenetworkprovider.stores
-Import-Package: org.eclipse.osgi.internal.framework,
- org.osgi.framework
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: org.eclipse.osgi

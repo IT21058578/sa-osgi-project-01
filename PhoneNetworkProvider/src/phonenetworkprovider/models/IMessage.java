@@ -1,27 +1,15 @@
 package phonenetworkprovider.models;
 
 public interface IMessage extends IModel {
+	void setType(MessageType type); 
 	
-	IServiceProvider getProvider();
+	MessageType getType();
 	
-	void setProvider(String providerId);
+	void setDescription(String description);
 	
-	String gettype();
+	String getDescription();
 	
-	void setType(String type);
+	void setUserId(String userId);
 	
-	void setMessageID(String msgID);
-	
-	String getMessageDescription();
-	
-	void setMessageDescription(String msgdes);
-	
-	void setComplaintID(String compID);
-	
-	String getComplaintDescription();
-	
-	void setComplaintDescription(String msgdes);
-	
-	
-
+	String getUserId();
 }

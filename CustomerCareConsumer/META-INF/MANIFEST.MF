@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CustomerCareConsumer
 Bundle-SymbolicName: CustomerCareConsumer
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: CustomerCareConsumer
 Bundle-Activator: customercareconsumer.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: CustomerCareConsumer

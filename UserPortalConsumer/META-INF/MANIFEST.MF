@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: UserPortalConsumer
 Bundle-SymbolicName: UserPortalConsumer
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: UserPortalConsumer
 Bundle-Activator: userportalconsumer.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: UserPortalConsumer

@@ -1,15 +1,12 @@
 package phonenetworkprovider;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-
+import org.osgi.framework.*;
 import phonenetworkprovider.stores.Database;
 
 
 public class Activator implements BundleActivator {
 
-	private ServiceRegistration registration;
+	private ServiceRegistration<?> registration;
 
 	@Override
 	public void start(BundleContext context) throws Exception {

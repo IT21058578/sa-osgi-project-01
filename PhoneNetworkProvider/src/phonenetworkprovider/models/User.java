@@ -7,21 +7,24 @@ import phonenetworkprovider.stores.Database;
 public class User implements IUser {
     private String id;
     private String name;
+    private String mobile;
     private String address;
     private String serviceProviderId;
     private ArrayList<String> dataPlanIds;
 
-    public User(String name, String address, String serviceProviderId) {
+    public User(String name, String address, String serviceProviderId, String mobile) {
         super();
         this.name = name;
+        this.mobile = mobile;
         this.address = address;
         this.dataPlanIds = new ArrayList<>();
+        this.serviceProviderId = serviceProviderId;
         this.id = Database.getInstance().generateUniqueId();
     }
 
-    public User(String name, String address, String serviceProviderId, ArrayList<String> dataPlanIds) {
-        this(name, address, serviceProviderId);
-        this.dataPlanIds = dataPlanIds;
+    public User(String name, String address, String serviceProviderId, String mobile, ArrayList<String> dataPlanIds) {
+        this(name, address, serviceProviderId, mobile);
+        this.dataPlanIds.addAll(dataPlanIds);
     }
 
     @Override
@@ -46,8 +49,11 @@ public class User implements IUser {
 
     @Override
     public IServiceProvider getProvider() {
+    	System.out.println(this.serviceProviderId);
         return Database.getInstance().getServiceProviders().stream()
-                .filter(provider -> provider.getId() == this.serviceProviderId)
+                .filter(provider ->{
+                	System.out.println(provider.getId());
+                	return provider.getId().equals(this.serviceProviderId); })
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -56,7 +62,7 @@ public class User implements IUser {
     public void setProvider(String providerId) {
         // Check if id is valid.
         boolean isValid = Database.getInstance().getServiceProviders().stream()
-                .anyMatch(provider -> provider.getId() == providerId);
+                .anyMatch(provider -> provider.getId().equals(providerId));
         if (!isValid)
             throw new IllegalStateException("Provider id is invalid");
         else {
@@ -70,7 +76,7 @@ public class User implements IUser {
         ArrayList<IDataPlan> dataPlans = new ArrayList<>();
         dataPlanIds.stream().forEach((id) -> {
             dataPlans.add(Database.getInstance().getDataPlans().stream()
-                    .filter(dataPlan -> dataPlan.getId() == id)
+                    .filter(dataPlan -> dataPlan.getId().equals(id))
                     .findFirst()
                     .orElseThrow(IllegalStateException::new));
         });
@@ -91,4 +97,19 @@ public class User implements IUser {
     public String getId() {
         return id;
     }
+
+    @Override
+	public String getMobile() {
+		return mobile;
+	}
+
+    @Override
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+    
+    @Override
+	public String getServiceProviderId() {
+		return serviceProviderId;
+	}
 }

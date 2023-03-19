@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: DataPlanManagerConsumer
 Bundle-SymbolicName: DataPlanManagerConsumer
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: DataPlanManagerConsumer
 Bundle-Activator: dataplanmanagerconsumer.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: DataPlanManagerConsumer
